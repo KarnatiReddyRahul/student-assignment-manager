@@ -162,13 +162,9 @@ function Dashboard() {
               <span className="stat-icon">{stat.icon}</span>
             </div>
 
-            <div className="stat-number">
+            <div className="stat-number-value">
               {loading ? "—" : stat.value}
             </div>
-
-            <p>
-              {loading ? "Loading data..." : "From your saved assignments"}
-            </p>
           </article>
         ))}
       </div>
@@ -184,15 +180,23 @@ function Dashboard() {
           </a>
         </div>
 
-        {loading ? (
+        {loading && (
           <div className="dashboard-message">
-            Loading your assignments...
+            <div className="empty-icon">◷</div>
+            <h3>Loading your assignments...</h3>
+            <p>Please wait while we fetch your data.</p>
           </div>
-        ) : error ? (
+        )}
+
+        {error && !loading && (
           <div className="dashboard-message">
-            Assignments could not be loaded.
+            <div className="empty-icon">✕</div>
+            <h3>Assignments could not be loaded.</h3>
+            <p>{error}</p>
           </div>
-        ) : upcoming.length === 0 ? (
+        )}
+
+        {!loading && !error && upcoming.length === 0 && (
           <div className="dashboard-message">
             <div className="empty-icon">✓</div>
             <h3>You're all caught up!</h3>
@@ -200,11 +204,13 @@ function Dashboard() {
               There are no pending assignments with upcoming deadlines.
             </p>
           </div>
-        ) : (
+        )}
+
+        {!loading && !error && upcoming.length > 0 && (
           <div className="assignment-list">
             {upcoming.slice(0, 5).map((item) => (
               <article className="assignment-row" key={item.id}>
-                <div className="assignment-symbol">▤</div>
+                <div className="assignment-symbol">📚</div>
 
                 <div className="assignment-details">
                   <h3>{item.title}</h3>

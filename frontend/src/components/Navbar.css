@@ -5,9 +5,11 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 18px;
-  padding: 18px 6%;
+  padding: 16px clamp(20px, 3.5vw, 48px);
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-brand {
